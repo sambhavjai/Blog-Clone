@@ -3,7 +3,7 @@ from django.utils import timezone
 from django.urls import reverse
 
 # Create your models here.
-class post(models.Model):
+class Post(models.Model):
     author = models.ForeignKey('auth.User',on_delete=models.DO_NOTHING)
     title = models.CharField(max_length=200)
     text = models.TextField()
@@ -23,8 +23,8 @@ class post(models.Model):
     def __str__(self):
         return self.title
 
-class comments(models.Model):
-    post = models.ForeignKey('basic_app.post',related_name='comments',on_delete=models.DO_NOTHING)
+class Comment(models.Model):
+    post = models.ForeignKey('basic_app.Post',related_name='comments',on_delete=models.DO_NOTHING)
     author = models.CharField(max_length=200)
     text = models.TextField()
     create_date = models.DateTimeField(default=timezone.now())
