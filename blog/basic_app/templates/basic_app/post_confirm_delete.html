@@ -1,0 +1,9 @@
+{% extends 'basic_app/base.html' %}
+{% block content %}
+  <h2>You are deleting {{post.title}}</h2>
+  <form method="POST">
+    {% csrf_token %}
+    <input class="btn btn-danger" type="submit" value="Confirm">
+    <p><a class="btn btn-primary" href="{% url 'post_detail' pk=post.pk %}">Cancel</a></p>
+  </form>
+{% endblock %}

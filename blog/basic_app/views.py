@@ -52,13 +52,12 @@ def publish_post(request,pk):
     return redirect('post_detail',pk=pk)
 
 ########### Comment Views #############
-@login_required
 def add_comment_to_post(request,pk):
     post = get_object_or_404(Post,pk=pk)
     if request.method == 'POST':
         form = CommentForm(request.POST)
         if form.is_valid():
-            comment = form.save(Commit=False)
+            comment = form.save(commit=False)
             comment.post = post
             comment.save()
             return redirect('post_detail',pk=post.pk)
@@ -66,11 +65,13 @@ def add_comment_to_post(request,pk):
         form = CommentForm()
     return render(request,'basic_app/comment_form.html',{'form':form})
 
+@login_required
 def approve_comment(request,pk):
     comment = get_object_or_404(Comment,pk=pk)
     comment.approve()
     return redirect('post_detail',pk=comment.post.pk)
 
+@login_required
 def delete_comment(request,pk):
     comment = get_object_or_404(Comment,pk=pk)
     post_pk = comment.post.pk
